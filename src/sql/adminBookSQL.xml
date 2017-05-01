@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap namespace="admin">
+	<typeAlias alias="admin" type="admin.AdminBookVO" />
+
+	<resultMap id="adminRes" class="admin">
+		<result property="book_no" column="book_no" />
+		<result property="book_nm" column="book_nm" />
+		<result property="book_writer" column="book_writer" />
+		<result property="book_publisher" column="book_publisher" />
+		<result property="book_publish_dt" column="book_publish_dt" />
+		<result property="book_category" column="book_category" />
+		<result property="book_comment" column="book_comment" />
+		<result property="book_contents" column="book_contents" />
+		<result property="book_loannum" column="book_loannum" />
+		<result property="book_image_small" column="book_image_small" />
+		<result property="book_image" column="book_image" />
+	</resultMap>
+
+
+	<sql id="select-all">
+		SELECT * FROM SS_BOOK_INFO
+	</sql>
+
+	<sql id="where-no">
+		where book_no=#book_no#
+	</sql>
+
+	<select id="selectAll" resultMap="adminRes">
+		<include refid="select-all"></include>
+		order by book_no desc
+	</select>
+	
+	<select id="selectOne" resultMap="adminRes" parameterClass="int">
+		<include refid="select-all" />
+		<include refid="where-no" />
+	</select>
+	
+	<insert id="insertBook" parameterClass="admin">
+		INSERT INTO SS_BOOK_INFO
+		(
+		book_no,
+		book_nm,
+		book_writer,
+		book_publisher,
+		book_publish_dt,
+		book_category,
+		book_comment,
+		book_contents,
+		book_loannum,
+		book_image,
+		book_image_small
+		)
+		VALUES (
+		SEQ_BOOK_NO.NEXTVAL,
+		#book_nm#,
+		#book_writer#,
+		#book_publisher#,
+		#book_publish_dt#,
+		#book_category#,
+		#book_comment#,
+		#book_contents#,
+		#book_loannum#,
+		#book_image#,
+		#book_image_small#
+		)
+	</insert>
+
+	<update id="updateBook" parameterClass="admin">
+    	UPDATE SS_BOOK_INFO SET
+    	book_nm = #book_nm#,
+		book_writer = #book_writer#,
+		book_publisher = #book_publisher#,
+		book_publish_dt = #book_publish_dt#,
+		book_category = #book_category#,
+		book_comment = #book_comment#,
+		book_contents = #book_contents#,
+		book_loannum = #book_loannum#,
+		book_image = #book_image#,
+		book_image_small = #book_image_small#
+		<include refid="where-no" />
+   	</update>
+
+	<delete id="deleteBook" parameterClass="admin">
+		DELETE FROM SS_BOOK_INFO 
+		<include refid="where-no" />
+	</delete>
+
+</sqlMap>
+	

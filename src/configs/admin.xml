@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 용량제한 100MB로 설정. <constant name="struts.multipart.maxSize" value="104857600" 
+		/> -->
+	
+	<package name="book" extends="struts-default, tiles-default">
+	
+		<!-- 도서 목록 -->
+		<action name="adminBookList" class="admin.AdminBookListAction">
+			<result type="tiles">adminBookList</result>
+		</action>
+	
+		<!-- 도서 등록 액션 -->
+		<action name="adminBookWriteForm" class="admin.AdminBookWriteAction" method="form">
+			<result type="tiles">adminBookWriteForm</result>
+		</action>
+		
+		<action name="adminBookWriteAction" class="admin.AdminBookWriteAction">
+			<result type="redirect-action">
+				<param name="actionName">adminBookList</param>
+			</result>
+		</action>
+		
+		<!-- 도서 상세보기 액션 -->
+		<action name="adminBookView" class="admin.AdminBookViewAction">
+			<result type="tiles">adminBookView</result>
+		</action>
+				
+		
+		<!-- 도서 수정 액션 -->
+		<action name="adminBookModifyForm" class="admin.AdminBookViewAction">
+			<result type="chain">adminBookWriteForm</result>
+		</action>
+		
+		<action name="adminBookModifyAction" class="admin.AdminBookModifyAction">
+			<result type="chain">adminBookView</result>
+		</action>
+		
+		<!-- 게시판 삭제 액션 -->
+		<action name="adminBookDelete" class="admin.AdminBookDeleteAction">
+			<result type="redirect-action">
+				<param name="actionName">adminBookList</param>
+			</result>
+		</action>
+		
+	</package>
+</struts>

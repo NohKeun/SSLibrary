@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap namespace="login">
+
+	<typeAlias alias="login" type="login.LoginVO" />
+	
+		<resultMap id="loginRes" class="login">
+		  	<result property="member_id" column="MEMBER_ID"/>
+		  	<result property="member_pw" column="MEMBER_PW"/>
+           	<result property="member_nm" column="MEMBER_NM"/>
+           	<result property="member_birth" column="MEMBER_BIRTH"/>
+           	<result property="member_email" column="MEMBER_EMAIL"/>
+           	<result property="member_email_dm" column="member_email_dm"/>
+           	<result property="member_mobile" column="MEMBER_MOBILE"/>
+           	<result property="member_zipcode" column="MEMBER_ZIPCODE"/>
+           	<result property="member_adr1" column="MEMBER_ADR1"/>
+           	<result property="member_adr2" column="MEMBER_ADR2"/>
+           	<result property="member_admin_tp" column="member_admin_tp"/>
+           	<result property="create_dt" column="create_dt"/>
+           	<result property="use_yn" column="use_yn"/>
+           	
+		</resultMap>
+		
+		<sql id="select-all">
+			SELECT * FROM SS_CRM_MEMBER
+		</sql>
+		
+		<sql id="where-no">
+			where MEMBER_ID=#member_id#
+		</sql>
+		
+		<select id="selectAll" resultMap="loginRes">
+		<include refid="select-all"></include>
+		</select>
+		
+		<select id="checkId" resultMap="loginRes" parameterClass="String">
+			select * from ss_crm_member
+			<include refid="where-no"></include>
+		</select>
+		
+		<select id="findId" resultClass="String" parameterClass="String">
+			select member_id from ss_crm_member
+			where member_email=#member_email#
+		</select>
+		
+		<select id="findPw" resultClass="String" parameterClass="String">
+			select member_pw from ss_crm_member
+			where member_id=#member_id#
+		</select>			
+
+</sqlMap>

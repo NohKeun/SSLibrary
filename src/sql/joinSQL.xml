@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap namespace="join">
+
+	<typeAlias alias="join" type="member.JoinVO" />
+
+		<!-- 리절트 맵 정의 -->
+	  	<resultMap id="joinRes" class="join">
+		  	<result property="member_id" column="member_id"/>
+		  	<result property="member_pw" column="member_pw"/>
+		  	<result property="member_nm" column="member_nm"/>
+		  	<result property="member_birth" column="member_birth"/>
+		  	<result property="member_email" column="member_email"/>
+		  	<result property="member_mobile" column="member_mobile"/>
+		  	<result property="member_zipcode" column="member_zipcode"/>
+		  	<result property="member_adr1" column="member_adr1"/>
+		  	<result property="member_adr2" column="member_adr2"/>
+		</resultMap>
+		
+		<sql id="select-all">
+			select * from ss_crm_member
+		</sql>
+		<sql id="where-id">
+			where member_id = #member_id#
+		</sql>
+		
+
+		<select id="selectMemberOne" resultMap="joinRes" parameterClass="String">
+			select * from ss_crm_member
+			where member_id = #member_id#		
+		</select>
+		
+		<select id="IdCheckSelectOne" resultMap="joinRes" parameterClass="String">
+			select * from ss_crm_member
+			where member_id = #member_id#		
+		</select>
+		
+		<select id="modifyselectOne" resultMap="joinRes" parameterClass="String">
+			SELECT * FROM ss_crm_member
+			WHERE member_id = #member_id#			
+		</select>
+		
+	
+		<!-- insert 쿼리문 정의 -->
+		<insert id="insertjoin" parameterClass="join">
+		
+      		INSERT INTO ss_crm_member (
+      							MEMBER_ID,
+								MEMBER_PW,
+								MEMBER_NM,
+								MEMBER_BIRTH,
+								MEMBER_EMAIL,
+								MEMBER_MOBILE,
+								MEMBER_ZIPCODE,
+								MEMBER_ADR1,
+								MEMBER_ADR2
+                         )
+               		 VALUES (
+                	 			#member_id#,
+								#member_pw#,
+								#member_nm#,
+								#member_birth#,
+								#member_email#,
+								#member_mobile#,
+								#member_zipcode#,
+								#member_adr1#,
+								#member_adr2#
+                         )
+		</insert>
+		
+		<update id="updateMember" parameterClass="join">
+    		UPDATE ss_crm_member SET
+    							 member_id = #member_id#,
+                     		     member_pw = #member_pw#,
+                       		     member_nm = #member_nm#,
+                       		     member_birth = #member_birth#,
+                       		     member_email = #member_email#,
+                       		     member_mobile = #member_mobile#,
+                       		     member_zipcode = #member_zipcode#,
+                       		     member_adr1 = #member_adr1#,
+                       		     member_adr2 = #member_adr2#
+		<include refid="where-id" />
+   		</update>
+   		
+   		<delete id="deleteJoin" parameterClass="join">
+			DELETE FROM ss_crm_member 
+			where member_id = #member_id#	
+   		 </delete>
+
+</sqlMap>

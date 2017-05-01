@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="board" template="/tiles/layout-left.jsp">
+		<put-attribute name="title" value="게시판" />
+		<put-attribute name="header" value="/tiles/header/header.jsp" />
+		<put-attribute name="lefter" value="/tiles/lefter/lefter-board.jsp" />
+		<put-attribute name="body" value="/board/board.jsp" />
+		<put-attribute name="footer" value="/tiles/footer/footer.jsp" />
+	</definition>
+	
+	<definition name="noticeList" extends="board">
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/board/noticeList.jsp" />
+	</definition>
+	
+	<!-- 글목록 -->
+	<definition name="boardList" extends="board">
+		<put-attribute name="title" value="자유게시판" />
+		<put-attribute name="body" value="/board/boardList.jsp" />
+	</definition>	
+	
+	<!-- 글작성 -->
+	<definition name="boardWriteForm" extends="board">
+		<put-attribute name="body" value="/board/boardWrite.jsp" />
+	</definition>
+	
+	<!-- 글수정 -->
+	<definition name="boardModifyForm" extends="board">
+		<put-attribute name="body" value="/board/boardModify.jsp" />
+	</definition>
+
+	<!-- 글상세보기 -->
+	<definition name="boardView" extends="board">
+		<put-attribute name="body" value="/board/boardView.jsp" />
+	</definition>
+	
+</tiles-definitions>

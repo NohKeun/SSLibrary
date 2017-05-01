@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap namespace="board">
+	<typeAlias alias="board" type="board.BoardVO" />
+
+	<resultMap id="boardRes" class="board">
+
+		<result property="article_no" column="article_no" />
+		<result property="member_id" column="member_id" />
+		<result property="title" column="title" />
+		<result property="readcount" column="readcount" />
+		<result property="content" column="content" />
+		<result property="create_dt" column="create_dt" />
+		<result property="board_type" column="board_type" />
+	</resultMap>
+
+	<sql id="select-all">
+		SELECT * FROM SS_CMM_BOARD
+	</sql>
+
+	<sql id="where-no">
+		where article_no=#article_no#
+	</sql>
+
+	<select id="selectAll" resultMap="boardRes">
+		<include refid="select-all"></include>
+		order by article_no desc
+	</select>
+
+	<select id="selectOne" resultMap="boardRes" parameterClass="int">
+		<include refid="select-all" />
+		<include refid="where-no" />
+	</select>
+	
+	<select id="selectLastNo" resultClass="board" parameterClass="int">
+			SELECT max(article_no) as article_no FROM SS_CMM_BOARD 
+	</select>
+	
+	<!-- 카테고리 분류 -->
+	<select id="selectboardTypeFree" resultMap="boardRes" parameterClass="int">
+		<include refid="select-all" />
+		WHERE board_type = '0'
+		ORDER BY article_no DESC
+	</select>
+	
+	<select id="selectboardTypeQna" resultMap="boardRes" parameterClass="int">
+		<include refid="select-all" />
+		WHERE board_type = '1'
+		ORDER BY article_no DESC
+	</select>
+	
+	<select id="selectboardTypeBookOrder" resultMap="boardRes" parameterClass="int">
+		<include refid="select-all" />
+		WHERE board_type = '2'
+		ORDER BY article_no DESC
+	</select>		
+
+	<!-- 검색 -->
+	<select id="selectSearchM" resultMap="boardRes" parameterClass="string">
+		<include refid="select-all" />
+		WHERE MEMBER_ID like #searchKeyword#
+		ORDER BY article_no DESC
+	</select>
+
+	<select id="selectSearchT" resultMap="boardRes" parameterClass="string">
+		<include refid="select-all" />
+		WHERE title like #searchKeyword#
+		ORDER BY article_no DESC
+	</select>
+
+	<select id="selectSearchC" resultMap="boardRes" parameterClass="string">
+		<include refid="select-all" />
+		WHERE content like #searchKeyword#
+		ORDER BY article_no DESC
+	</select>
+	
+	<insert id="insertBoard" parameterClass="board">
+		INSERT INTO SS_CMM_BOARD
+		(
+		ARTICLE_NO,
+		MEMBER_ID,
+		TITLE,
+		CONTENT,
+		BOARD_TYPE
+		)
+		VALUES (
+		SEQ_BOARD_NO.NEXTVAL,
+		#member_id#,
+		#title#,
+		#content#,
+		#board_type#
+		)
+	</insert>
+
+	<update id="updateBoard" parameterClass="board">
+    		UPDATE SS_CMM_BOARD SET TITLE = #title#,
+                       		     CONTENT = #content#
+		<include refid="where-no" />
+   	</update>
+
+	<update id="updateReadCount" parameterClass="board">
+		UPDATE SS_CMM_BOARD SET READCOUNT = readcount + 1
+		<include refid="where-no" />
+	</update>
+	
+	<delete id="deleteBoard" parameterClass="board">
+			DELETE FROM SS_CMM_BOARD 
+			<include refid="where-no" />
+	</delete>
+	
+</sqlMap>

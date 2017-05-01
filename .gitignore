@@ -1,0 +1,10 @@
+build/classes/board/DeleteAction.class
+build/classes/board/ListAction.class
+build/classes/board/ModifyAction.class
+build/classes/board/PagingAction.class
+build/classes/board/ViewAction.class
+build/classes/board/WriteAction.class
+build/classes/configs/admin.xml
+build/classes/login/CheckIdAction.class
+build/classes/login/FindAction.class
+build/classes/sql/adminBookSQL.xml

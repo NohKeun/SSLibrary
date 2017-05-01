@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+	<package name="board" extends="struts-default, tiles-default">
+
+		<action name="boardList" class="board.ListAction">
+			<result type="tiles">boardList</result>
+		</action>
+		
+		<action name="boardListFree" class="board.ListAction" method="free">
+			<result type="tiles">boardList</result>
+		</action>
+		
+		<action name="boardListQna" class="board.ListAction" method="qna">
+			<result type="tiles">boardList</result>
+		</action>
+		
+		<action name="boardListBookOrder" class="board.ListAction" method="bookorder">
+			<result type="tiles">boardList</result>
+		</action>		
+				
+
+		<action name="noticeList" class="board.ListAction" method="notice">
+			<result type="tiles">noticeList</result>
+		</action>
+
+		<!-- 게시판 글쓰기 액션 -->
+		<action name="boardWriteForm" class="board.WriteAction" method="form">
+			<result type="tiles">boardWriteForm</result>
+		</action>
+		
+		<action name="boardWriteAction" class="board.WriteAction">
+			<result type="redirect-action">
+				<param name="actionName">boardList</param>
+			</result>
+		</action>
+		
+		<!-- 게시판 글 상세보기 액션 -->
+		<action name="boardView" class="board.ViewAction">
+			<result type="tiles">boardView</result>
+		</action>
+		
+		
+		<!-- 게시판 수정 액션 -->
+		<action name="boardModify" class="board.ViewAction">
+			<result type="chain">boardModifyForm</result>
+		</action>
+		
+		<action name="boardModifyForm" class="board.ModifyAction" method="form">
+			<result type="tiles">boardModifyForm</result>
+		</action>
+		
+		<action name="boardModifyAction" class="board.ModifyAction">
+			<result type="redirect-action">
+				<param name="actionName">boardList</param>
+			</result>
+		</action>
+		
+		<!-- 게시판 삭제 액션 -->
+		<action name="boardDelete" class="board.DeleteAction">
+			<result type="redirect-action">
+				<param name="actionName">boardList</param>
+				</result>
+		</action>
+	
+	</package>
+		
+	
+		<!-- 게시판 답변글쓰기 액션 -->
+<!-- 		<action name="boardReplyForm" class="board." method="reply">
+			<result type="chain">boardWriteForm</result>
+		</action> -->
+		
+		<!-- <action name="boardReply" class="board.">
+			<result type="redirect-action">
+				<param name="actionName">boardList</param>
+			</result>
+		</action> -->
+		
+</struts>
+ 
